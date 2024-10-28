@@ -1,39 +1,42 @@
 package com.fyxify.practice.service;
 
-import com.fyxify.practice.dao.BtuOfFurnaceDAO;
+import com.fyxify.practice.dao.BtuOfFurnaceRepository;
 import com.fyxify.practice.entity.BtuOfFurnace;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BtuOfFurnaceServiceImpl implements BtuOfFurnaceService {
 
-    private BtuOfFurnaceDAO btuOfFurnaceDAO;
+    private BtuOfFurnaceRepository btuOfFurnaceRepository;
 
-    public BtuOfFurnaceServiceImpl(BtuOfFurnaceDAO btuOfFurnaceDAO) {
-        this.btuOfFurnaceDAO = btuOfFurnaceDAO;
+    public BtuOfFurnaceServiceImpl(BtuOfFurnaceRepository btuOfFurnaceDAO) {
+        this.btuOfFurnaceRepository = btuOfFurnaceDAO;
     }
 
     public List<BtuOfFurnace> findAll() {
-        return btuOfFurnaceDAO.findAll();
+        return btuOfFurnaceRepository.findAll();
     }
 
     @Override
     public BtuOfFurnace findById(long id) {
-        return btuOfFurnaceDAO.findById(id);
+        Optional<BtuOfFurnace> btuOfFurnace = btuOfFurnaceRepository.findById(id);
+        if (btuOfFurnace.isPresent()) {
+            return btuOfFurnace.get();
+        } else {
+            throw new RuntimeException("Btu not found with id " + id);
+        }
     }
 
     @Override
-    @Transactional
     public BtuOfFurnace upsert(BtuOfFurnace btuOfFurnace) {
-        return btuOfFurnaceDAO.upsert(btuOfFurnace);
+        return btuOfFurnaceRepository.save(btuOfFurnace);
     }
 
     @Override
-    @Transactional
     public void delete(long id) {
-        btuOfFurnaceDAO.delete(id);
+        btuOfFurnaceRepository.deleteById(id);
     }
 }
