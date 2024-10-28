@@ -1,4 +1,4 @@
-Spring Boot Practice by Luv2Code
+#Spring Boot Practice by Luv2Code
 This repository is for practicing Spring Boot fundamentals, based on the examples and exercises provided by Luv2Code. It covers key Spring Boot features and configurations, including REST APIs, dependency injection, and integration with Spring Data JPA.
 
 Contents
